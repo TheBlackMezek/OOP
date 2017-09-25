@@ -19,7 +19,7 @@ public:
 		int region, bool allowEmpty, bool allowFull, int sortType);
 
 private:
-	const static int SERVERINFO_CAPACITY;
+	const static int SERVERINFO_CAPACITY = 20;
 
 	ServerInfo servers[SERVERINFO_CAPACITY];
 

@@ -147,7 +147,7 @@ int ServerBrowserService::getServers(ServerInfo* dstArray, size_t dstSize, int m
 
 
 
-static bool isHigherOrder(char* s1, size_t s1l, char* s2, size_t s2l)
+bool ServerBrowserService::isHigherOrder(char* s1, size_t s1l, char* s2, size_t s2l)
 {
 	for (int i = 0; i < s1l; ++i)
 	{
