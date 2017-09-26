@@ -7,8 +7,8 @@
 
 Player::Player()
 {
-	x = 0;
-	y = 0;
+	body.height = 16;
+	body.width = 8;
 }
 
 
@@ -22,7 +22,10 @@ void Player::update()
 {
 	if (enabled)
 	{
+		body.vely -= 0.1;
 
+		body.y += body.vely;
+		body.x += body.velx;
 	}
 }
 
@@ -30,7 +33,7 @@ void Player::draw()
 {
 	if (enabled)
 	{
-		Box::draw(x, y, 10, 10);
+		Box::draw(body.x, body.y, body.width, body.height);
 	}
 }
 

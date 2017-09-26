@@ -2,6 +2,7 @@
 
 
 #include "GameObject.h"
+#include "RigidBody.h"
 
 
 class Player : public GameObject
@@ -10,8 +11,7 @@ public:
 	Player();
 	~Player();
 
-	float x;
-	float y;
+	RigidBody body;
 
 	virtual void update() override;
 	virtual void draw() override;

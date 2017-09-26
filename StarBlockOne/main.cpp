@@ -12,7 +12,7 @@
 
 int main()
 {
-	sfw::initContext(800, 600, "Hello world!");
+	sfw::initContext(800, 600, "StarBlock One");
 
 	sfw::setBackgroundColor(BLACK);
 
@@ -21,8 +21,8 @@ int main()
 	Cursor cursor;
 
 	Player player;
-	player.x = 10;
-	player.y = 200;
+	player.body.x = 10;
+	player.body.y = 200;
 
 
 	Map map(800 / 10, 600 / 10);
@@ -48,6 +48,10 @@ int main()
 		{
 			map.addTile(((int)sfw::getMouseX() + 5) / 10, ((int)sfw::getMouseY() + 5) / 10);
 		}
+
+
+		player.update();
+		map.collide(player.body);
 
 
 

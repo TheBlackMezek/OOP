@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "RigidBody.h"
 
 
 class Map : public GameObject
@@ -17,6 +18,8 @@ public:
 
 	virtual void update() override;
 	virtual void draw() override;
+
+	bool collide(RigidBody& r);
 
 	void addTile(int x, int y);
 	void delTile(int x, int y);
