@@ -56,7 +56,7 @@ int main()
 
 	while (sfw::stepContext())
 	{
-		emitter.update();
+		//emitter.update();
 
 		for (int i = ptcs.size() - 1; i >= 0; --i)
 		{
