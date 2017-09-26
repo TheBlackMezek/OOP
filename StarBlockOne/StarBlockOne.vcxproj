@@ -128,7 +128,9 @@
   <ItemGroup>
     <ClCompile Include="BaseParticle.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BoxParticle.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
@@ -139,7 +141,9 @@
   <ItemGroup>
     <ClInclude Include="BaseParticle.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxParticle.h" />
     <ClInclude Include="Cursor.h" />
+    <ClInclude Include="Emitter.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Map.h" />

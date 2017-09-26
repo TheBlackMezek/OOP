@@ -9,7 +9,9 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cursor.h"
-#include "BaseParticle.h"
+//#include "BaseParticle.h"
+#include "BoxParticle.h"
+#include "Emitter.h"
 
 
 
@@ -44,11 +46,18 @@ int main()
 	map.addTile(0, 1);
 	map.addTile(2, 2);
 
+	Emitter emitter;
+	emitter.ptcs = &ptcs;
+	emitter.x = 400;
+	emitter.y = 300;
+
 
 
 
 	while (sfw::stepContext())
 	{
+		emitter.update();
+
 		for (int i = ptcs.size() - 1; i >= 0; --i)
 		{
 			if (ptcs[i].timeLeft <= 0)
