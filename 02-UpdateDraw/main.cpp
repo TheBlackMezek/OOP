@@ -60,9 +60,9 @@ int main()
 	objects[1].mass = 10;
 	objects[1].size = 2;
 
-	objects[2].x = 215;
+	objects[2].x = 155;
 	objects[2].y = 301;
-	objects[2].vely = -0.9;
+	objects[2].vely = -0.8;
 	objects[2].mass = 1;
 	objects[2].size = 1;
 
