@@ -21,8 +21,8 @@ public:
 
 	bool collide(RigidBody& r);
 
-	void addTile(int x, int y);
-	void delTile(int x, int y);
+	bool addTile(int x, int y);
+	bool delTile(int x, int y);
 
 private:
 	std::vector<int> tiles;

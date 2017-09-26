@@ -86,18 +86,30 @@ bool Map::collide(RigidBody& r)
 }
 
 
-void Map::addTile(int x, int y)
+bool Map::addTile(int x, int y)
 {
+	bool ret = false;
 	if (x >= 0 && x < width && y >= 0 && y < height)
 	{
+		if (tiles[x + y * width] == 0)
+		{
+			ret = true;
+		}
 		tiles[x + y * width] = 1;
 	}
+	return ret;
 }
 
-void Map::delTile(int x, int y)
+bool Map::delTile(int x, int y)
 {
+	bool ret = false;
 	if (x >= 0 && x < width && y >= 0 && y < height)
 	{
+		if (tiles[x + y * width] == 1)
+		{
+			ret = true;
+		}
 		tiles[x + y * width] = 0;
 	}
+	return ret;
 }

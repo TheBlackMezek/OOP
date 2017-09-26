@@ -1,17 +1,25 @@
 
 
+#include <vector>
+#include <time.h>
+
 #include "sfwdraw.h"
 
 
 #include "Player.h"
 #include "Map.h"
 #include "Cursor.h"
+#include "BaseParticle.h"
 
 
 
 
 int main()
 {
+	srand(time(NULL));
+
+
+
 	sfw::initContext(800, 600, "StarBlock One");
 
 	sfw::setBackgroundColor(BLACK);
@@ -19,6 +27,8 @@ int main()
 
 
 	Cursor cursor;
+
+	std::vector<BaseParticle> ptcs;
 
 	Player player;
 	player.body.x = 10;
@@ -39,10 +49,33 @@ int main()
 
 	while (sfw::stepContext())
 	{
+		for (int i = ptcs.size() - 1; i >= 0; --i)
+		{
+			if (ptcs[i].timeLeft <= 0)
+			{
+				ptcs.erase(ptcs.begin() + i);
+			}
+			else
+			{
+				ptcs[i].update();
+			}
+		}
 
 		if (sfw::getMouseButton(1))
 		{
-			map.delTile(((int)sfw::getMouseX() + 5) / 10, ((int)sfw::getMouseY() + 5) / 10);
+			if (map.delTile(((int)sfw::getMouseX() + 5) / 10, ((int)sfw::getMouseY() + 5) / 10))
+			{
+				for (int i = 0; i < 5; ++i)
+				{
+					BaseParticle p;
+					p.timeLeft = (float)(rand() % 15 - 10) / 10.0f;
+					p.x = ((int)sfw::getMouseX() + 5) / 10 * 10;
+					p.y = ((int)sfw::getMouseY() + 5) / 10 * 10;
+					p.velx = (float)(rand() % 200 - 100) / 100.0f;
+					p.vely = (float)(rand() % 200 - 100) / 100.0f;
+					ptcs.push_back(p);
+				}
+			}
 		}
 		if (sfw::getMouseButton(0))
 		{
@@ -55,6 +88,10 @@ int main()
 
 
 
+		for (int i = 0; i < ptcs.size(); ++i)
+		{
+			ptcs[i].draw();
+		}
 
 		player.draw();
 		map.draw();
