@@ -4,7 +4,7 @@
 
 
 
-Player::Player()
+Player1::Player1()
 {
 	x = 10;
 	y = 10;
@@ -15,13 +15,13 @@ Player::Player()
 }
 
 
-Player::~Player()
+Player1::~Player1()
 {
 }
 
 
 
-void Player::update()
+void Player1::update()
 {
 	if (sfw::getKey('W'))
 	{
@@ -66,7 +66,7 @@ void Player::update()
 	}
 }
 
-void Player::draw()
+void Player1::draw()
 {
 	if (enabled)
 	{

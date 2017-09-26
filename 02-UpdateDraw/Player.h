@@ -1,9 +1,9 @@
 #pragma once
-class Player
+class Player1
 {
 public:
-	Player();
-	~Player();
+	Player1();
+	~Player1();
 
 	float x;
 	float y;

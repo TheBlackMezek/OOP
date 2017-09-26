@@ -43,7 +43,7 @@ int main()
 
 
 
-	Player player;
+	Player1 player;
 	Player2 player2;
 
 	const size_t spaceobjects = 3;
@@ -57,14 +57,14 @@ int main()
 	objects[1].x = 200;
 	objects[1].y = 301;
 	objects[1].vely = -0.5;
-	objects[1].size = 2;
 	objects[1].mass = 10;
+	objects[1].size = 2;
 
-	objects[2].x = 210;
+	objects[2].x = 215;
 	objects[2].y = 301;
-	objects[2].vely = 5;
-	objects[2].size = 21;
+	objects[2].vely = -0.9;
 	objects[2].mass = 1;
+	objects[2].size = 1;
 
 
 
