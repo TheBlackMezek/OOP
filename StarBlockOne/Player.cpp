@@ -9,8 +9,8 @@
 
 Player::Player()
 {
-	body.height = 16;
-	body.width = 8;
+	body.height = 16 / 2;
+	body.width = 8 / 2;
 }
 
 
@@ -73,7 +73,7 @@ void Player::draw()
 {
 	if (enabled)
 	{
-		Box::draw(body.x, body.y, body.width, body.height);
+		Box::draw(body.x, body.y, body.width * 2, body.height * 2);
 	}
 }
 

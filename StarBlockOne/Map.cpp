@@ -57,10 +57,10 @@ bool Map::collide(RigidBody& r)
 {
 	bool hasHit = false;
 
-	for (int y = r.y - r.height / 2; y <= r.y + r.height / 2; y += 10)
+	for (int y = r.y - r.height; y <= r.y + r.height; y += 10)
 	{
 		int tiley = y / 10;
-		for (int x = r.x - r.width / 2; x <= r.x + r.width / 2; x += 10)
+		for (int x = r.x - r.width; x <= r.x + r.width; x += 10)
 		{
 			int tilex = x / 10;
 
@@ -70,22 +70,22 @@ bool Map::collide(RigidBody& r)
 			{
 				hasHit = true;
 
-				if (r.y - r.height / 2 < tiley * 10 + 5 &&
-					r.y - r.height / 2 > tiley * 10 - 5)
+				if (r.y - r.height < tiley * 10 + 5 &&
+					r.y - r.height > tiley * 10 - 5)
 				{
-					r.y = tiley * 10 + 5 + (r.height / 2);
+					r.y = tiley * 10 + 5 + (r.height);
 				}
 
-				if (r.x - r.width / 2 < tilex * 10 + 5 &&
-					r.x - r.width / 2 > tilex * 10 - 5)
+				if (r.x - r.width < tilex * 10 + 5 &&
+					r.x - r.width > tilex * 10 - 5)
 				{
 					r.x = tilex * 10 + 5 + (r.width / 2);
 				}
 
-				if (r.x + r.width / 2 > tilex * 10 + 5 &&
-					r.x + r.width / 2 < tilex * 10 - 5)
+				if (r.x + r.width > tilex * 10 + 5 &&
+					r.x + r.width < tilex * 10 - 5)
 				{
-					r.x = tilex * 10 - 5 - (r.width / 2);
+					r.x = tilex * 10 - 5 - (r.width);
 				}
 
 				r.velx = 0;
