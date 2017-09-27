@@ -1,5 +1,7 @@
 #include "Map.h"
 
+#include <cmath>
+
 #include "Box.h"
 
 
@@ -57,10 +59,10 @@ bool Map::collide(RigidBody& r)
 {
 	bool hasHit = false;
 
-	for (int y = r.y - r.height; y <= r.y + r.height; y += 10)
+	for (int y = r.y - r.height + 5; y > 0 && y <= r.y + r.height; y += 10)
 	{
 		int tiley = y / 10;
-		for (int x = r.x - r.width; x <= r.x + r.width; x += 10)
+		for (int x = r.x - r.width + 5; x > 0 && x <= r.x + r.width; x += 10)
 		{
 			int tilex = x / 10;
 
@@ -70,13 +72,65 @@ bool Map::collide(RigidBody& r)
 			{
 				hasHit = true;
 
+				int dirxmod = 1;
+				int dirymod = 1;
+
+				float xdepth = 0;
+				float ydepth = 0;
+
+				if (r.x - r.width < tilex * 10 + 5 &&
+					r.x - r.width > tilex * 10 - 5)
+				{
+					xdepth = (tilex * 10 + 5) - (r.x - r.width);
+					dirxmod = -1;
+				}
+				else if (r.x + r.width < tilex * 10 + 5 &&
+						 r.x + r.width > tilex * 10 - 5)
+				{
+					xdepth = (tilex * 10 - 5) - (r.x + r.width);
+				}
+
 				if (r.y - r.height < tiley * 10 + 5 &&
 					r.y - r.height > tiley * 10 - 5)
 				{
-					r.y = tiley * 10 + 5 + (r.height);
+					ydepth = (tiley * 10 + 5) - (r.y - r.height);
+					dirymod = -1;
+				}
+				else if (r.y + r.height < tiley * 10 + 5 &&
+						 r.y + r.height > tiley * 10 - 5)
+				{
+					ydepth = (tiley * 10 - 5) - (r.y + r.height);
 				}
 
-				if (r.x - r.width < tilex * 10 + 5 &&
+
+				float xtimeout = (r.velx == 0) ? 0 : xdepth / abs(r.velx);
+				float ytimeout = (r.vely == 0) ? 0 : ydepth / abs(r.vely);
+
+				//float xtimeout = xdepth / abs(r.velx);
+				//float ytimeout = ydepth / abs(r.vely);
+
+
+				if (xtimeout < ytimeout)
+				{
+					r.x += xdepth * dirxmod;
+					r.y += r.vely * (r.velx / xdepth) * dirymod;
+				}
+				else if (xtimeout > ytimeout)
+				{
+					r.y += ydepth * dirymod;
+					r.x += r.velx * (r.vely / ydepth) * dirxmod;
+				}
+				
+
+
+
+				/*if (r.y - r.height < tiley * 10 + 5 &&
+					r.y - r.height > tiley * 10 - 5)
+				{
+					r.y = tiley * 10 + 5 + (r.height);
+				}*/
+
+				/*if (r.x - r.width < tilex * 10 + 5 &&
 					r.x - r.width > tilex * 10 - 5)
 				{
 					r.x = tilex * 10 + 5 + (r.width / 2);
@@ -86,7 +140,7 @@ bool Map::collide(RigidBody& r)
 					r.x + r.width < tilex * 10 - 5)
 				{
 					r.x = tilex * 10 - 5 - (r.width);
-				}
+				}*/
 
 				r.velx = 0;
 				r.vely = 0;

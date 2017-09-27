@@ -1,5 +1,6 @@
 
 
+#include <iostream>
 #include <vector>
 #include <time.h>
 
@@ -33,8 +34,10 @@ int main()
 	std::vector<BaseParticle> ptcs;
 
 	Player player;
-	player.body.x = 10;
-	player.body.y = 200;
+	player.body.x = 11;
+	player.body.y = 500;
+	player.body.velx = 0;
+	player.body.vely = 0;
 
 
 	Map map(800 / 10, 600 / 10);
@@ -106,6 +109,10 @@ int main()
 		map.draw();
 
 		cursor.draw();
+
+		std::cout << player.body.x << std::endl;
+		std::cout << player.body.y << std::endl;
+		std::cout << player.body.vely << std::endl;
 	}
 
 
