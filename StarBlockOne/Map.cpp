@@ -63,16 +63,18 @@ bool Map::collide(RigidBody& r)
 
 
 	float rbot = r.y;
-	float rtop = r.y + r.height;
+	float rtop = r.y + r.height - 1;
 	float rlef = r.x;
-	float rrgt = r.x + r.width;
+	float rrgt = r.x + r.width - 1;
 
 
 
-	int tbot = ((int)rbot / 10) * 10;
-	int ttop = ((int)rtop / 10) * 10;
-	int tlef = ((int)rlef / 10) * 10;
-	int trgt = ((int)rrgt / 10) * 10;
+	int tbot = floor((rbot + 1) / 10) * 10;
+	int ttop = floor(rtop / 10) * 10;
+	int tlef = floor((rlef + 1) / 10) * 10;
+	int trgt = floor(rrgt / 10) * 10;
+
+	int tbotGround = ((int)rbot / 10) * 10;
 
 
 
@@ -86,6 +88,21 @@ bool Map::collide(RigidBody& r)
 			{
 				r.y = tbot + 10;
 				r.vely = 0;
+				break;
+			}
+		}
+	}
+
+	if (trgt >= 0 && trgt < width * 10)
+	{
+		for (int y = tbot; y <= ttop; y += 10)
+		{
+			sfw::drawCircle(trgt +5, y+5, 5);
+			if (y >= 0 && y < height * 10 &&
+				tiles[(trgt / 10) + (y / 10) * width] == 1)
+			{
+				r.x = trgt - 10;
+				r.velx = 0;
 				break;
 			}
 		}
