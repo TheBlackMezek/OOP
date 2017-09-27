@@ -13,6 +13,7 @@
 //#include "BaseParticle.h"
 #include "BoxParticle.h"
 #include "Emitter.h"
+#include "Polygon.h"
 
 
 
@@ -53,6 +54,20 @@ int main()
 	emitter.ptcs = &ptcs;
 	emitter.x = 400;
 	emitter.y = 300;
+
+	Polygon polygon;
+	polygon.xs.push_back(10);
+	polygon.ys.push_back(10);
+	polygon.xs.push_back(100);
+	polygon.ys.push_back(100);
+	polygon.xs.push_back(20);
+	polygon.ys.push_back(40);
+	polygon.xs.push_back(170);
+	polygon.ys.push_back(540);
+	polygon.xs.push_back(10);
+	polygon.ys.push_back(310);
+	polygon.xs.push_back(180);
+	polygon.ys.push_back(150);
 
 
 
@@ -109,6 +124,8 @@ int main()
 		map.draw();
 
 		cursor.draw();
+
+		//polygon.draw();
 
 		std::cout << player.body.x << std::endl;
 		std::cout << player.body.y << std::endl;

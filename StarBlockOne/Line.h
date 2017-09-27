@@ -14,5 +14,6 @@ public:
 	bool enabled;
 
 	void draw();
+	static void draw(float x1, float y1, float x2, float y2);
 };
 
