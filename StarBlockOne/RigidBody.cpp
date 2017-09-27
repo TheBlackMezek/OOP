@@ -4,6 +4,8 @@
 
 RigidBody::RigidBody()
 {
+	grounded = false;
+
 	x = 0;
 	y = 0;
 
@@ -17,4 +19,13 @@ RigidBody::RigidBody()
 
 RigidBody::~RigidBody()
 {
+}
+
+
+
+
+void RigidBody::update()
+{
+	x += velx;
+	y += vely;
 }

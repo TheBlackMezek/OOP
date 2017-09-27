@@ -115,6 +115,11 @@ int main()
 
 
 
+
+		//player.body.update();
+
+
+
 		for (int i = 0; i < ptcs.size(); ++i)
 		{
 			ptcs[i].draw();

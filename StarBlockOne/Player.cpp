@@ -9,8 +9,10 @@
 
 Player::Player()
 {
-	body.height = 16 / 2;
-	body.width = 8 / 2;
+	body.height = 16;
+	body.width = 8;
+
+	walkForce = 0;
 }
 
 
@@ -24,6 +26,13 @@ void Player::update()
 {
 	if (enabled)
 	{
+		/*if (walkForce)
+		{
+			body.velx -= walkForce;
+		}*/
+
+		walkForce = 0;
+
 		if (sfw::getKey('W'))
 		{
 			body.y += 2;
@@ -35,10 +44,12 @@ void Player::update()
 		if (sfw::getKey('A'))
 		{
 			body.x -= 2;
+			//walkForce = -2;
 		}
 		if (sfw::getKey('D'))
 		{
 			body.x += 2;
+			//walkForce = 2;
 		}
 
 
@@ -61,12 +72,16 @@ void Player::update()
 		}
 
 
-
+		/*if (!body.grounded)
+		{
+			body.vely -= 0.1;
+		}*/
+		//body.velx += walkForce;
 		body.vely -= 0.1;
 		//body.velx += 0.1;
 
 		body.y += body.vely;
-		body.x += body.velx;
+		//body.x += body.velx;
 	}
 }
 
@@ -74,7 +89,7 @@ void Player::draw()
 {
 	if (enabled)
 	{
-		Box::draw(body.x, body.y, body.width * 2, body.height * 2);
+		Box::draw(body.x, body.y, body.width, body.height);
 	}
 }
 

@@ -1,9 +1,16 @@
 #pragma once
+
+
+#include "AABB.h"
+
+
 class RigidBody
 {
 public:
 	RigidBody();
 	~RigidBody();
+
+	bool grounded;
 
 	float x;
 	float y;
@@ -13,5 +20,10 @@ public:
 
 	float width;
 	float height;
+
+	AABB aabb;
+
+
+	void update();
 };
 

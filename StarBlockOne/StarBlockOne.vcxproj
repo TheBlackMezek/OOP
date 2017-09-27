@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="BaseParticle.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BoxParticle.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="BaseParticle.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BoxParticle.h" />

@@ -15,5 +15,8 @@ public:
 
 	virtual void update() override;
 	virtual void draw() override;
+
+private:
+	float walkForce;
 };
 
