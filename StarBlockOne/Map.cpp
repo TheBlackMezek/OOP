@@ -70,24 +70,32 @@ bool Map::collide(RigidBody& r)
 
 
 	int tbot = floor((rbot + 1) / 10) * 10;
+	int tbotGround = floor(rbot / 10) * 10;
 	int ttop = floor(rtop / 10) * 10;
 	int tlef = floor((rlef + 1) / 10) * 10;
 	int trgt = floor(rrgt / 10) * 10;
 
-	int tbotGround = ((int)rbot / 10) * 10;
+	//int tbotGround = ((int)rbot / 10) * 10;
 
 
 
-	if (tbot >= 0 && tbot < height * 10)
+	if (tbotGround >= 0 && tbotGround < height * 10)
 	{
 		for (int x = tlef; x <= trgt; x += 10)
 		{
 			//sfw::drawCircle(x+5, tbot+5, 5);
 			if (x >= 0 && x < width * 10 &&
-				tiles[(x / 10) + (tbot / 10) * width] == 1)
+				tiles[(x / 10) + (tbotGround / 10) * width] == 1)
 			{
-				r.y = tbot + 10;
+				r.y = tbotGround + 10;
 				r.vely = 0;
+
+				float rbot = r.y;
+				float rtop = r.y + r.height - 1;
+
+				int tbot = floor((rbot + 1) / 10) * 10;
+				int ttop = floor(rtop / 10) * 10;
+
 				break;
 			}
 		}
@@ -101,7 +109,7 @@ bool Map::collide(RigidBody& r)
 			if (y >= 0 && y < height * 10 &&
 				tiles[(trgt / 10) + (y / 10) * width] == 1)
 			{
-				r.x = trgt - 10;
+				r.x = trgt - 9;
 				r.velx = 0;
 				break;
 			}
@@ -112,17 +120,17 @@ bool Map::collide(RigidBody& r)
 
 
 	//r.grounded = false;
-
+	
 	//for (int y = r.y - r.height + 5; y > 0 && y <= r.y + r.height + 9; y += 10)
 	//{
 	//	int tiley = y / 10;
 	//	for (int x = r.x - r.width + 5; x > 0 && x <= r.x + r.width + 9; x += 10)
 	//	{
 	//		int tilex = x / 10;
-
+	//
 	//		sfw::drawCircle(tilex * 10, tiley * 10, 5);
 	//		Box::draw(r.x, r.y, r.width * 2, r.height * 2);
-
+	//
 	//		if (tilex >= 0 && tilex < width &&
 	//			tiley >= 0 && tiley < height &&
 	//			tiles[tilex + tiley * width] == 1)
@@ -131,16 +139,16 @@ bool Map::collide(RigidBody& r)
 	//			{
 	//				//r.vely = 0;
 	//			}
-
-
+	//
+	//
 	//			hasHit = true;
-
+	//
 	//			int dirxmod = 1;
 	//			int dirymod = 1;
-
+	//
 	//			float xdepth = 0;
 	//			float ydepth = 0;
-
+	//
 	//			if (r.x - r.width < tilex * 10 + 5 &&
 	//				r.x - r.width > tilex * 10 - 5)
 	//			{
@@ -152,7 +160,7 @@ bool Map::collide(RigidBody& r)
 	//			{
 	//				xdepth = (tilex * 10 - 5) - (r.x + r.width);
 	//			}
-
+	//
 	//			if (r.y - r.height < tiley * 10 + 5 &&
 	//				r.y - r.height > tiley * 10 - 5)
 	//			{
@@ -172,15 +180,15 @@ bool Map::collide(RigidBody& r)
 	//					r.grounded = true;
 	//				}
 	//			}
-
-
+	//
+	//
 	//			float xtimeout = (r.velx == 0) ? 0 : xdepth / abs(r.velx);
 	//			float ytimeout = (r.vely == 0) ? 0 : ydepth / abs(r.vely);
-
+	//
 	//			//float xtimeout = xdepth / abs(r.velx);
 	//			//float ytimeout = ydepth / abs(r.vely);
-
-
+	//
+	//
 	//			if (xtimeout < ytimeout)
 	//			{
 	//				r.velx += xdepth * dirxmod;
@@ -195,23 +203,23 @@ bool Map::collide(RigidBody& r)
 	//				//r.y += ydepth * dirymod;
 	//				//r.x += r.velx * (r.vely / ydepth) * dirxmod;
 	//			}
-
+	//
 	//			
-
-
-
+	//
+	//
+	//
 	//			/*if (r.y - r.height < tiley * 10 + 5 &&
 	//				r.y - r.height > tiley * 10 - 5)
 	//			{
 	//				r.y = tiley * 10 + 5 + (r.height);
 	//			}*/
-
+	//
 	//			/*if (r.x - r.width < tilex * 10 + 5 &&
 	//				r.x - r.width > tilex * 10 - 5)
 	//			{
 	//				r.x = tilex * 10 + 5 + (r.width / 2);
 	//			}
-
+	//
 	//			if (r.x + r.width > tilex * 10 + 5 &&
 	//				r.x + r.width < tilex * 10 - 5)
 	//			{
@@ -220,12 +228,12 @@ bool Map::collide(RigidBody& r)
 	//		}
 	//	}
 	//}
-
+	//
 	//if (hasHit)
 	//{
 	//	r.x += r.velx;
 	//	r.y += r.vely;
-
+	//
 	//	r.velx = 0;
 	//	r.vely = 0;
 	//}
