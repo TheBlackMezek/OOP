@@ -63,7 +63,12 @@ bool Map::collide(RigidBody& r)
 {
 	bool hasHit = false;
 
-	//All numbers in map grid coords
+	float velMag = sqrt((r.velx * r.velx) + (r.vely * r.vely));
+
+	float unitX = r.velx / velMag;
+	float unitY = r.vely / velMag;
+
+	//All further numbers in map grid coords
 	float rbot = r.y / 10;
 	float rtop = (r.y + r.height - 1) / 10;
 	float rlef = r.x / 10;
@@ -86,7 +91,7 @@ bool Map::collide(RigidBody& r)
 	float deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 	float perpWallDist; //perp for perpendicular
 
-	float maxDist = 800;
+	float maxDist = velMag / 10.0f;
 	float totalDist = 0;
 
 	int stepX;
@@ -104,7 +109,7 @@ bool Map::collide(RigidBody& r)
 	}
 	else
 	{
-		stepX - 1;
+		stepX = 1;
 		sideDistX = (mapX + 1.0 - rlef) * deltaDistX;
 	}
 
@@ -138,7 +143,7 @@ bool Map::collide(RigidBody& r)
 			side = 1;
 		}
 
-		if (tiles[mapX + mapY * width] > 0)
+		if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height && tiles[mapX + mapY * width] > 0)
 		{
 			hit = true;
 		}
@@ -147,7 +152,11 @@ bool Map::collide(RigidBody& r)
 
 	if (hit)
 	{
+		r.x += totalDist * unitX;
+		r.y += totalDist * unitY;
 
+		r.velx = 0;
+		r.vely = 0;
 	}
 
 

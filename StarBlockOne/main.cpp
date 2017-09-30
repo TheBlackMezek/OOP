@@ -116,7 +116,7 @@ int main()
 
 
 
-		//player.body.update();
+		player.body.update();
 
 
 

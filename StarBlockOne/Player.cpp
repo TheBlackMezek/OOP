@@ -82,7 +82,7 @@ void Player::update()
 		body.vely -= 0.1;
 		//body.velx += 0.1;
 
-		body.y += body.vely;
+		//body.y += body.vely;
 		//body.x += body.velx;
 	}
 }
