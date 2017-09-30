@@ -125,6 +125,23 @@ bool Map::collide(RigidBody& r)
 	}
 
 
+	if (sideDistX < sideDistY)
+	{
+		totalDist = sideDistX;
+		side = 0;
+	}
+	else
+	{
+		totalDist = sideDistY;
+		side = 1;
+	}
+
+	if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height && tiles[mapX + mapY * width] > 0)
+	{
+		hit = true;
+	}
+
+
 
 	while (!hit && totalDist <= maxDist)
 	{
@@ -152,8 +169,8 @@ bool Map::collide(RigidBody& r)
 
 	if (hit)
 	{
-		r.x += totalDist * unitX;
-		r.y += totalDist * unitY;
+		r.x += totalDist * 10 * unitX;
+		r.y += totalDist * 10 * unitY;
 
 		r.velx = 0;
 		r.vely = 0;
