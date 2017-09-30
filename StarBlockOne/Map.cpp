@@ -57,19 +57,118 @@ void Map::draw()
 
 
 
+
+
 bool Map::collide(RigidBody& r)
 {
 	bool hasHit = false;
 
+	//All numbers in map grid coords
+	float rbot = r.y / 10;
+	float rtop = (r.y + r.height - 1) / 10;
+	float rlef = r.x / 10;
+	float rrgt = (r.x + r.width - 1) / 10;
 
-	float rbot = r.y;
-	float rtop = r.y + r.height - 1;
-	float rlef = r.x;
-	float rrgt = r.x + r.width - 1;
+
+	//Raycasting from http://lodev.org/cgtutor/raycasting.html
+
+	float rayDirY = r.vely / 10;
+	float rayDirX = r.velx / 10;
+
+	//Raycast from bottom left (origin) corner, if it works I'll do the rest with a function
+	int mapX = int(rlef);
+	int mapY = int(rbot);
+
+	float sideDistX;
+	float sideDistY;
+
+	float deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
+	float deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+	float perpWallDist; //perp for perpendicular
+
+	float maxDist = 800;
+	float totalDist = 0;
+
+	int stepX;
+	int stepY;
+
+	bool hit = false;
+	int side;
 
 
 
-	int tbot = floor((rbot + 1) / 10) * 10;
+	if (rayDirX < 0)
+	{
+		stepX = -1;
+		sideDistX = (rlef - mapX) * deltaDistX;
+	}
+	else
+	{
+		stepX - 1;
+		sideDistX = (mapX + 1.0 - rlef) * deltaDistX;
+	}
+
+	if (rayDirY < 0)
+	{
+		stepY = -1;
+		sideDistY = (rbot - mapY) * deltaDistY;
+	}
+	else
+	{
+		stepY = 1;
+		sideDistY = (mapY + 1 - rbot) * deltaDistY;
+	}
+
+
+
+	while (!hit && totalDist <= maxDist)
+	{
+		if (sideDistX < sideDistY)
+		{
+			sideDistX += deltaDistX;
+			totalDist = sideDistX;
+			mapX += stepX;
+			side = 0;
+		}
+		else
+		{
+			sideDistY += deltaDistY;
+			totalDist = sideDistY;
+			mapY += stepY;
+			side = 1;
+		}
+
+		if (tiles[mapX + mapY * width] > 0)
+		{
+			hit = true;
+		}
+	}
+
+
+	if (hit)
+	{
+
+	}
+
+
+
+
+
+
+	if (side == 0)
+	{
+		perpWallDist = (mapX - rlef + (1 - stepX) / 2) / rayDirX;
+	}
+	else
+	{
+		perpWallDist = (mapY - rbot + (1 - stepY) / 2) / rayDirY;
+	}
+
+
+
+
+
+	/*int tbot = floor((rbot + 1) / 10) * 10;
 	int tbotGround = floor(rbot / 10) * 10;
 	int ttop = floor(rtop / 10) * 10;
 	int tlef = floor((rlef + 1) / 10) * 10;
@@ -114,7 +213,7 @@ bool Map::collide(RigidBody& r)
 				break;
 			}
 		}
-	}
+	}*/
 
 
 
