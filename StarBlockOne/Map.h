@@ -19,6 +19,7 @@ public:
 	virtual void update() override;
 	virtual void draw() override;
 
+	float raycastCollide(float x, float y, float velx, float vely);
 	bool collide(RigidBody& r);
 
 	bool addTile(int x, int y);
