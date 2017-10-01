@@ -91,11 +91,15 @@ bool Map::collide(RigidBody& r)
 	float deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 	float perpWallDist; //perp for perpendicular
 
-	float maxDist = velMag / 10.0f;
+	//float maxDist = velMag / 10.0f;
+	float maxDist = 800;
 	float totalDist = 0;
 
 	int stepX;
 	int stepY;
+
+	int collisionModX = 0;
+	int collisionModY = 0;
 
 	bool hit = false;
 	int side;
@@ -105,6 +109,7 @@ bool Map::collide(RigidBody& r)
 	if (rayDirX < 0)
 	{
 		stepX = -1;
+		collisionModX = 0;
 		sideDistX = (rlef - mapX) * deltaDistX;
 	}
 	else
@@ -116,6 +121,7 @@ bool Map::collide(RigidBody& r)
 	if (rayDirY < 0)
 	{
 		stepY = -1;
+		collisionModY = 0;
 		sideDistY = (rbot - mapY) * deltaDistY;
 	}
 	else
@@ -141,13 +147,14 @@ bool Map::collide(RigidBody& r)
 		hit = true;
 	}
 
-
+	float lastAdded = 0;
 
 	while (!hit && totalDist <= maxDist)
 	{
 		if (sideDistX < sideDistY)
 		{
 			sideDistX += deltaDistX;
+			lastAdded = deltaDistX;
 			totalDist = sideDistX;
 			mapX += stepX;
 			side = 0;
@@ -155,19 +162,25 @@ bool Map::collide(RigidBody& r)
 		else
 		{
 			sideDistY += deltaDistY;
+			lastAdded = deltaDistY;
 			totalDist = sideDistY;
 			mapY += stepY;
 			side = 1;
 		}
 
-		if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height && tiles[mapX + mapY * width] > 0)
+		if (mapX + collisionModX >= 0 &&
+			mapX + collisionModX < width &&
+			mapY + collisionModY >= 0 &&
+			mapY + collisionModY < height &&
+			tiles[(mapX + collisionModX) + (mapY + collisionModY) * width] > 0)
 		{
 			hit = true;
+			totalDist -= lastAdded;
 		}
 	}
 
 
-	if (hit)
+	if (hit && totalDist * 10 <= velMag)
 	{
 		r.x += totalDist * 10 * unitX;
 		r.y += totalDist * 10 * unitY;

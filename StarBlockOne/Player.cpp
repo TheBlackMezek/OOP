@@ -43,13 +43,13 @@ void Player::update()
 		}
 		if (sfw::getKey('A'))
 		{
-			body.x -= 2;
+			//body.x -= 2;
 			body.velx = -2;
 			//walkForce = -2;
 		}
 		if (sfw::getKey('D'))
 		{
-			body.x += 2;
+			//body.x += 2;
 			body.velx = 2;
 			//walkForce = 2;
 		}
