@@ -112,7 +112,7 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 	else
 	{
 		stepX = 1;
-		sideDistX = (mapX + 1.0 - x) * deltaDistX;
+		sideDistX = (mapX + 1 - x) * deltaDistX;
 	}
 
 	if (rayDirY < 0)
@@ -144,14 +144,15 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 		hit = true;
 	}
 
-	float lastAdded = 0;
+	float prevDist = 0;
 
 	while (!hit && totalDist <= maxDist)
 	{
 		if (sideDistX < sideDistY)
 		{
 			sideDistX += deltaDistX;
-			lastAdded = deltaDistX;
+			//lastAdded = deltaDistX;
+			prevDist = totalDist;
 			totalDist = sideDistX;
 			mapX += stepX;
 			side = 0;
@@ -159,7 +160,8 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 		else
 		{
 			sideDistY += deltaDistY;
-			lastAdded = deltaDistY;
+			//lastAdded = deltaDistY;
+			prevDist = totalDist;
 			totalDist = sideDistY;
 			mapY += stepY;
 			side = 1;
@@ -172,7 +174,8 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 			tiles[(mapX + collisionModX) + (mapY + collisionModY) * width] > 0)
 		{
 			hit = true;
-			totalDist -= lastAdded;
+			totalDist = prevDist;
+			//totalDist -= lastAdded;
 		}
 	}
 
@@ -204,10 +207,11 @@ bool Map::collide(RigidBody& r)
 	float topRgtDist = raycastCollide(r.x + r.width - 1,	r.y + r.height - 1, r.velx, r.vely);
 
 
+
 	if (botLefDist != -1 &&
-		botLefDist <= topRgtDist &&
-		botLefDist <= topLefDist &&
-		botLefDist <= botRgtDist)
+		(botLefDist <= topRgtDist || topRgtDist == -1) &&
+		(botLefDist <= topLefDist || topLefDist == -1) &&
+		(botLefDist <= botRgtDist || botRgtDist == -1))
 	{
 		r.x += botLefDist * 10 * unitX;
 		r.y += botLefDist * 10 * unitY;
@@ -216,9 +220,9 @@ bool Map::collide(RigidBody& r)
 		r.vely = 0;
 	}
 	else if (botRgtDist != -1 &&
-		botRgtDist <= topRgtDist &&
-		botRgtDist <= topLefDist &&
-		botRgtDist <= botLefDist)
+		(botRgtDist <= topRgtDist || topRgtDist == -1) &&
+		(botRgtDist <= topLefDist || topLefDist == -1) &&
+		(botRgtDist <= botLefDist || botLefDist == -1))
 	{
 		r.x += botRgtDist * 10 * unitX;
 		r.y += botRgtDist * 10 * unitY;
@@ -227,9 +231,9 @@ bool Map::collide(RigidBody& r)
 		r.vely = 0;
 	}
 	else if (topLefDist != -1 &&
-		topLefDist <= topRgtDist &&
-		topLefDist <= botRgtDist &&
-		topLefDist <= botLefDist)
+		(topLefDist <= topRgtDist || topRgtDist == -1) &&
+		(topLefDist <= botRgtDist || botRgtDist == -1) &&
+		(topLefDist <= botLefDist || botLefDist == -1))
 	{
 		r.x += topLefDist * 10 * unitX;
 		r.y += topLefDist * 10 * unitY;
@@ -238,9 +242,9 @@ bool Map::collide(RigidBody& r)
 		r.vely = 0;
 	}
 	else if (topRgtDist != -1 &&
-		topRgtDist <= botRgtDist &&
-		topRgtDist <= topLefDist &&
-		topRgtDist <= botLefDist)
+		(topRgtDist <= botRgtDist || botRgtDist == -1) &&
+		(topRgtDist <= topLefDist || topLefDist == -1) &&
+		(topRgtDist <= botLefDist || botLefDist == -1))
 	{
 		r.x += topRgtDist * 10 * unitX;
 		r.y += topRgtDist * 10 * unitY;
