@@ -18,5 +18,6 @@ public:
 
 private:
 	float walkForce;
+
 };
 

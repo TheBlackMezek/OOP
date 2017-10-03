@@ -61,7 +61,7 @@ void Map::draw()
 
 float Map::raycastCollide(float x, float y, float velx, float vely)
 {
-
+	
 	float velMag = sqrt((velx * velx) + (vely * vely));
 
 	float unitX = velx / velMag;
@@ -151,20 +151,24 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 		if (sideDistX < sideDistY)
 		{
 			sideDistX += deltaDistX;
-			//lastAdded = deltaDistX;
-			prevDist = totalDist;
-			totalDist = sideDistX;
 			mapX += stepX;
 			side = 0;
+			if (sideDistX > totalDist)
+			{
+				prevDist = totalDist;
+				totalDist = sideDistX;
+			}
 		}
 		else
 		{
 			sideDistY += deltaDistY;
-			//lastAdded = deltaDistY;
-			prevDist = totalDist;
-			totalDist = sideDistY;
 			mapY += stepY;
 			side = 1;
+			if (sideDistY > totalDist)
+			{
+				prevDist = totalDist;
+				totalDist = sideDistY;
+			}
 		}
 
 		if (mapX + collisionModX >= 0 &&
@@ -175,7 +179,6 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 		{
 			hit = true;
 			totalDist = prevDist;
-			//totalDist -= lastAdded;
 		}
 	}
 

@@ -31,7 +31,23 @@ void Player::update()
 			body.velx -= walkForce;
 		}*/
 
-		walkForce = 0;
+		//walkForce = 0;
+		if (walkForce < 0)
+		{
+			walkForce += 0.1;
+			if (walkForce > 0)
+			{
+				walkForce = 0;
+			}
+		}
+		else if (walkForce > 0)
+		{
+			walkForce -= 0.1;
+			if (walkForce < 0)
+			{
+				walkForce = 0;
+			}
+		}
 
 		if (sfw::getKey('W'))
 		{
@@ -39,19 +55,19 @@ void Player::update()
 		}
 		if (sfw::getKey('S'))
 		{
-			body.y -= 2;
+			//body.y -= 2;
 		}
 		if (sfw::getKey('A'))
 		{
 			//body.x -= 2;
 			body.velx = -2;
-			//walkForce = -2;
+			//walkForce += -0.2;
 		}
 		if (sfw::getKey('D'))
 		{
 			//body.x += 2;
 			body.velx = 2;
-			//walkForce = 2;
+			//walkForce += 0.2;
 		}
 
 
