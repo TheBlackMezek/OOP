@@ -90,14 +90,14 @@ int main()
 
 		if (sfw::getMouseButton(1))
 		{
-			if (map.delTile(((int)sfw::getMouseX() + 5) / 10, ((int)sfw::getMouseY() + 5) / 10))
+			if (map.delTile(((int)sfw::getMouseX()) / 10, ((int)sfw::getMouseY()) / 10))
 			{
 				for (int i = 0; i < 5; ++i)
 				{
 					BaseParticle p;
 					p.timeLeft = (float)(rand() % 15 - 10) / 10.0f;
-					p.x = ((int)sfw::getMouseX() + 5) / 10 * 10;
-					p.y = ((int)sfw::getMouseY() + 5) / 10 * 10;
+					p.x = ((int)sfw::getMouseX()) / 10 * 10 + 5;
+					p.y = ((int)sfw::getMouseY()) / 10 * 10 + 5;
 					p.velx = (float)(rand() % 200 - 100) / 100.0f;
 					p.vely = (float)(rand() % 200 - 100) / 100.0f;
 					ptcs.push_back(p);
@@ -106,7 +106,7 @@ int main()
 		}
 		if (sfw::getMouseButton(0))
 		{
-			map.addTile(((int)sfw::getMouseX() + 5) / 10, ((int)sfw::getMouseY() + 5) / 10);
+			map.addTile(((int)sfw::getMouseX()) / 10, ((int)sfw::getMouseY()) / 10);
 		}
 
 
