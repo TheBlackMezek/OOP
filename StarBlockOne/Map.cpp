@@ -95,9 +95,6 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 	int stepX;
 	int stepY;
 
-	int collisionModX = 0;
-	int collisionModY = 0;
-
 	bool hit = false;
 	int side;
 
@@ -106,7 +103,6 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 	if (rayDirX < 0)
 	{
 		stepX = -1;
-		collisionModX = 0;
 		sideDistX = (x - mapX) * deltaDistX;
 	}
 	else
@@ -118,7 +114,6 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 	if (rayDirY < 0)
 	{
 		stepY = -1;
-		collisionModY = 0;
 		sideDistY = (y - mapY) * deltaDistY;
 	}
 	else
@@ -171,11 +166,11 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 			}
 		}
 
-		if (mapX + collisionModX >= 0 &&
-			mapX + collisionModX < width &&
-			mapY + collisionModY >= 0 &&
-			mapY + collisionModY < height &&
-			tiles[(mapX + collisionModX) + (mapY + collisionModY) * width] > 0)
+		if (mapX >= 0 &&
+			mapX < width &&
+			mapY >= 0 &&
+			mapY < height &&
+			tiles[mapX + mapY * width] > 0)
 		{
 			hit = true;
 			totalDist = prevDist;
