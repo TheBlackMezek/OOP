@@ -49,9 +49,11 @@ void Player::update()
 			}
 		}
 
-		if (sfw::getKey('W'))
+		if (sfw::getKey('W') && body.grounded)
 		{
-			body.y += 2;
+			//body.y += 2;
+			body.grounded = false;
+			body.vely = 2.6;
 		}
 		if (sfw::getKey('S'))
 		{

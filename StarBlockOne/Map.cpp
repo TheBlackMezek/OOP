@@ -315,6 +315,11 @@ bool Map::collide(RigidBody& r)
 			r.velx = 0;
 		}
 
+		if (r.vely < 0)
+		{
+			r.grounded = true;
+		}
+
 		r.vely = 0;
 	}
 
