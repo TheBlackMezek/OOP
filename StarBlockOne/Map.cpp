@@ -270,6 +270,8 @@ bool Map::collide(RigidBody& r)
 
 	if (hitSide == 0)
 	{
+		float velStart = r.vely;
+
 		if (r.vely * r.velx > 0)
 		{
 			r.vely -= r.velx;
@@ -279,7 +281,11 @@ bool Map::collide(RigidBody& r)
 			r.vely += r.velx;
 		}
 
-		if ((r.vely < 0 && r.vely > -0.1) || (r.vely > 0 && r.vely < 0.1))
+		if (r.vely * velStart < 0)
+		{
+			r.vely = 0;
+		}
+		else if ((r.vely < 0 && r.vely > -0.1) || (r.vely > 0 && r.vely < 0.1))
 		{
 			r.vely = 0;
 		}
@@ -288,6 +294,8 @@ bool Map::collide(RigidBody& r)
 	}
 	else if (hitSide == 1)
 	{
+		float velStart = r.velx;
+
 		if (r.vely * r.velx > 0)
 		{
 			r.velx -= r.vely;
@@ -297,7 +305,12 @@ bool Map::collide(RigidBody& r)
 			r.velx += r.vely;
 		}
 
-		if ((r.velx < 0 && r.velx > -0.1) || (r.velx > 0 && r.velx < 0.1))
+
+		if (r.velx * velStart < 0)
+		{
+			r.velx = 0;
+		}
+		else if ((r.velx < 0 && r.velx > -0.1) || (r.velx > 0 && r.velx < 0.1))
 		{
 			r.velx = 0;
 		}
