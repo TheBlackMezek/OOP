@@ -7,6 +7,18 @@
 #include "RigidBody.h"
 
 
+
+
+
+
+struct RaycastReturn
+{
+	float dist;
+	int side;
+};
+
+
+
 class Map : public GameObject
 {
 public:
@@ -19,7 +31,7 @@ public:
 	virtual void update() override;
 	virtual void draw() override;
 
-	float raycastCollide(float x, float y, float velx, float vely);
+	RaycastReturn raycastCollide(float x, float y, float velx, float vely);
 	bool collide(RigidBody& r);
 
 	bool addTile(int x, int y);

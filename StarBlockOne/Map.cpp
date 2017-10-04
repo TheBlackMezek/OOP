@@ -59,7 +59,7 @@ void Map::draw()
 
 
 
-float Map::raycastCollide(float x, float y, float velx, float vely)
+RaycastReturn Map::raycastCollide(float x, float y, float velx, float vely)
 {
 	
 	float velMag = sqrt((velx * velx) + (vely * vely));
@@ -148,22 +148,22 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 			sideDistX += deltaDistX;
 			mapX += stepX;
 			side = 0;
-			if (sideDistX > totalDist)
-			{
+			//if (sideDistX > totalDist)
+			//{
 				prevDist = totalDist;
 				totalDist = sideDistX;
-			}
+			//}
 		}
 		else
 		{
 			sideDistY += deltaDistY;
 			mapY += stepY;
 			side = 1;
-			if (sideDistY > totalDist)
-			{
+			//if (sideDistY > totalDist)
+			//{
 				prevDist = totalDist;
 				totalDist = sideDistY;
-			}
+			//}
 		}
 
 		if (mapX >= 0 &&
@@ -180,17 +180,20 @@ float Map::raycastCollide(float x, float y, float velx, float vely)
 
 	if (hit && totalDist * 10 <= velMag)
 	{
-		return totalDist;
+		//return totalDist;
+		return RaycastReturn{ totalDist, side };
 	}
 	else
 	{
-		return -1;
+		//return -1;
+		return RaycastReturn{ -1, side };
 	}
 }
 
 bool Map::collide(RigidBody& r)
 {
 	bool hasHit = false;
+	int hitSide = -1;
 
 
 	float velMag = sqrt((r.velx * r.velx) + (r.vely * r.vely));
@@ -199,10 +202,15 @@ bool Map::collide(RigidBody& r)
 	float unitY = r.vely / velMag;
 
 	
-	float botLefDist = raycastCollide(r.x,					r.y,				r.velx, r.vely);
-	float botRgtDist = raycastCollide(r.x + r.width - 1,	r.y,				r.velx, r.vely);
-	float topLefDist = raycastCollide(r.x,					r.y + r.height - 1, r.velx, r.vely);
-	float topRgtDist = raycastCollide(r.x + r.width - 1,	r.y + r.height - 1, r.velx, r.vely);
+	RaycastReturn botLefRay = raycastCollide(r.x,					r.y,				r.velx, r.vely);
+	RaycastReturn botRgtRay = raycastCollide(r.x + r.width - 1,	r.y,				r.velx, r.vely);
+	RaycastReturn topLefRay = raycastCollide(r.x,					r.y + r.height - 1, r.velx, r.vely);
+	RaycastReturn topRgtRay = raycastCollide(r.x + r.width - 1,	r.y + r.height - 1, r.velx, r.vely);
+
+	float botLefDist = botLefRay.dist;
+	float botRgtDist = botRgtRay.dist;
+	float topLefDist = topLefRay.dist;
+	float topRgtDist = topRgtRay.dist;
 
 
 
@@ -214,8 +222,10 @@ bool Map::collide(RigidBody& r)
 		r.x += botLefDist * 10 * unitX;
 		r.y += botLefDist * 10 * unitY;
 
-		r.velx = 0;
-		r.vely = 0;
+		//r.velx = 0;
+		//r.vely = 0;
+		hasHit = true;
+		hitSide = botLefRay.side;
 	}
 	else if (botRgtDist != -1 &&
 		(botRgtDist <= topRgtDist || topRgtDist == -1) &&
@@ -225,8 +235,10 @@ bool Map::collide(RigidBody& r)
 		r.x += botRgtDist * 10 * unitX;
 		r.y += botRgtDist * 10 * unitY;
 
-		r.velx = 0;
-		r.vely = 0;
+		//r.velx = 0;
+		//r.vely = 0;
+		hasHit = true;
+		hitSide = botRgtRay.side;
 	}
 	else if (topLefDist != -1 &&
 		(topLefDist <= topRgtDist || topRgtDist == -1) &&
@@ -236,8 +248,10 @@ bool Map::collide(RigidBody& r)
 		r.x += topLefDist * 10 * unitX;
 		r.y += topLefDist * 10 * unitY;
 
-		r.velx = 0;
-		r.vely = 0;
+		//r.velx = 0;
+		//r.vely = 0;
+		hasHit = true;
+		hitSide = topLefRay.side;
 	}
 	else if (topRgtDist != -1 &&
 		(topRgtDist <= botRgtDist || botRgtDist == -1) &&
@@ -247,10 +261,21 @@ bool Map::collide(RigidBody& r)
 		r.x += topRgtDist * 10 * unitX;
 		r.y += topRgtDist * 10 * unitY;
 
-		r.velx = 0;
-		r.vely = 0;
+		//r.velx = 0;
+		//r.vely = 0;
+		hasHit = true;
+		hitSide = topRgtRay.side;
 	}
 	
+
+	if (hitSide == 0)
+	{
+		r.velx = 0;
+	}
+	else if (hitSide == 1)
+	{
+		r.vely = 0;
+	}
 
 
 	return hasHit;
