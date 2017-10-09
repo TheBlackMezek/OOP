@@ -63,14 +63,14 @@ void Player::update()
 		{
 			//body.y -= 2;
 		}
-		if (sfw::getKey('A'))
+		if (sfw::getKey('A') && body.grounded)
 		{
 			//body.x -= 2;
 			body.velx = -2;
 			walking = true;
 			//walkForce += -0.2;
 		}
-		if (sfw::getKey('D'))
+		if (sfw::getKey('D') && body.grounded)
 		{
 			//body.x += 2;
 			body.velx = 2;
