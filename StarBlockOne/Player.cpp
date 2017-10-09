@@ -49,6 +49,10 @@ void Player::update()
 			}
 		}
 
+
+
+		bool walking = false;
+
 		if (sfw::getKey('W') && body.grounded)
 		{
 			//body.y += 2;
@@ -63,13 +67,20 @@ void Player::update()
 		{
 			//body.x -= 2;
 			body.velx = -2;
+			walking = true;
 			//walkForce += -0.2;
 		}
 		if (sfw::getKey('D'))
 		{
 			//body.x += 2;
 			body.velx = 2;
+			walking = true;
 			//walkForce += 0.2;
+		}
+
+		if (!walking && body.grounded)
+		{
+			body.velx *= 0.1;
 		}
 
 
