@@ -239,7 +239,7 @@ bool Map::collide(RigidBody& r)
 		(botRgtDist <= topLefDist || topLefDist == -1) &&
 		(botRgtDist <= botLefDist || botLefDist == -1))
 	{
-		r.x -= botRgtDist * 10 * unitX;
+		r.x -= botRgtDist * 10 * unitX - 1;
 		r.y += botRgtDist * 10 * unitY;
 
 		//r.velx = 0;
@@ -265,7 +265,7 @@ bool Map::collide(RigidBody& r)
 		(topRgtDist <= topLefDist || topLefDist == -1) &&
 		(topRgtDist <= botLefDist || botLefDist == -1))
 	{
-		r.x -= topRgtDist * 10 * unitX;
+		r.x -= topRgtDist * 10 * unitX - 1;
 		r.y -= topRgtDist * 10 * unitY;
 
 		//r.velx = 0;
