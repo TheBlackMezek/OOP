@@ -92,12 +92,12 @@ void Player::update()
 		}
 
 
-		/*if (!body.grounded)
+		if (!body.grounded)
 		{
 			body.vely -= 0.1;
-		}*/
+		}
 		//body.velx += walkForce;
-		body.vely -= 0.1;
+		//body.vely -= 0.1;
 		//body.velx += 0.1;
 
 		//body.y += body.vely;

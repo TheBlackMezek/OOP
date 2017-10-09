@@ -331,6 +331,22 @@ bool Map::collide(RigidBody& r)
 	}
 
 
+
+
+	if (r.grounded)
+	{
+		sfw::drawCircle(0, 0, 10);
+		botLefRay = raycastCollide(r.x, r.y, 0, -0.1);
+		botRgtRay = raycastCollide(r.x + r.width - 1, r.y, 0, -0.1);
+
+		if ((botLefRay.dist == -1 || botLefRay.dist > 0.1) &&
+			(botRgtRay.dist == -1 || botRgtRay.dist > 0.1))
+		{
+			r.grounded = false;
+		}
+	}
+
+
 	return hasHit;
 }
 
